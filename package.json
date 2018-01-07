@@ -1,8 +1,12 @@
 {
-  "name": "am-auth-sdk",
+  "name": "express-thrift-gateway",
   "version": "1.0.0",
-  "description": "",
+  "description": "build a gateway with epxress and thrift",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zifengb/express-thrift-gateway.git"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
@@ -20,6 +24,14 @@
     "server": "node ./src/server.js",
     "dev": "gulp dev"
   },
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "express",
+    "thrift"
+  ],
+  "author": "zifengb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zifengb/express-thrift-gateway/issues"
+  },
+  "homepage": "https://github.com/zifengb/express-thrift-gateway#readme"
 }
