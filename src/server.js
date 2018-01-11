@@ -1,5 +1,6 @@
 const express = require('express');
 const server = express();
+const SocketIO = require('socket.io');
 
 // epxress plugin
 const bodyParser = require('body-parser');
@@ -58,4 +59,14 @@ server.post('/test', (req, res) => {
 routers.forEach((el, index) => server.use(el.path, el.component));
 
 // Server Listen
-server.listen(PORT, HOST_NAME,() => console.log(server_info));
+const app = server.listen(PORT, HOST_NAME,() => console.log(server_info));
+
+const io = SocketIO.listen(app);
+
+const emitters = require('./socket/index').Emitters;
+const listeners = require('./socket/index').Listeners;
+
+io.on('connection', socket => {
+	emitters.forEach(el => socket.emit(el.eventName, el.data))
+	listeners.forEach(el => socket.on(el.eventName, el.handler))
+});
