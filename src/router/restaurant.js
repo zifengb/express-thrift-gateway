@@ -22,8 +22,14 @@ const ACTIONS_LIST = {
 	"restaurant_selectByKeyWord": {
 		action: "restaurant_selectByKeyWord"
 	},
+	"restaurant_selectByRange": {
+		action: "restaurant_selectByRange"
+	},
 	"restaurant_condition": {
 		action: "restaurant_condition"
+	},
+	"photos_getByReId": {
+		action: "photos_getByReId"
 	}
 };
 
@@ -39,6 +45,44 @@ const toString = function (key) {
 };
 
 // router configuration
+
+// 商家查询
+router.get('/', (req, res) => {
+	let key = 'restaurant_condition';
+	let query = req.query;
+	ACTIONS_LIST[key].data = {
+		offset: query.offset || 0,
+		limit: query.limit || 10,
+		// 按分类查询商家
+		category_ids: [1,2].join(','),
+		// busy_level: 0,
+		// deliver_free: 0,
+		// new_restaurant: 0,
+		// is_premium: 0,
+		// order_by: 1,
+		longitude: query.longitude || LONGITUDE,
+		latitude: query.latitude || LATITUDE
+	};
+	console.dir(toString(key));
+	thriftRPC.send(toString(key), function (err, data) {
+	    data && res.json(parse(data));
+	});
+});
+
+// 根据用户经纬度返回附近商家
+router.get('/range', (req, res) => {
+	let key = "restaurant_selectByRange";
+	ACTIONS_LIST[key].data = {
+		offset: 0,
+		limit: 10,
+		longitude: LONGITUDE,
+		latitude: LATITUDE
+	};
+	console.dir(toString(key));
+	thriftRPC.send(toString(key), function (err, data) {
+		data && res.json(parse(data));
+	});
+});
 
 // 根据商家id查询
 router.get('/:id', (req, res) => {
@@ -75,6 +119,17 @@ router.get('/:id/menu', (req, res) => {
 	});
 });
 
+// 查询商家实景图
+router.get('/:id/photos', (req, res) => {
+	let key = "photos_getByReId";
+	let rid = req.params.id;
+	ACTIONS_LIST[key].data = { id: rid};
+	console.dir(toString(key));
+	thriftRPC.send(toString(key), function (err, data) {
+		data && res.json(parse(data));
+	});
+});
+
 // 商家&食物混合查询
 router.get('/query/restaurant_foods', (req, res) => {
 	let key = 'restaurant_selectByKeyWord';
@@ -85,29 +140,6 @@ router.get('/query/restaurant_foods', (req, res) => {
 		longitude: query.longitude || LONGITUDE,
 		latitude: query.latitude || LATITUDE,
 		keyword: '猪脚饭'
-	};
-	console.dir(toString(key));
-	thriftRPC.send(toString(key), function (err, data) {
-	    data && res.json(parse(data));
-	});
-});
-
-// 商家查询
-router.get('/', (req, res) => {
-	let key = 'restaurant_condition';
-	let query = req.query;
-	ACTIONS_LIST[key].data = {
-		offset: query.offset || 0,
-		limit: query.limit || 10,
-		// 按分类查询商家
-		category_ids: [1,2].join(','),
-		// busy_level: 0,
-		// deliver_free: 0,
-		// new_restaurant: 0,
-		// is_premium: 0,
-		// order_by: 1,
-		longitude: query.longitude || LONGITUDE,
-		latitude: query.latitude || LATITUDE
 	};
 	console.dir(toString(key));
 	thriftRPC.send(toString(key), function (err, data) {

@@ -10,5 +10,9 @@ module.exports = [
 	{
 		path: '/food',
 		component: require('./food')
+	},
+	{
+		path: '/cart',
+		component: require('./cart')
 	}
 ];

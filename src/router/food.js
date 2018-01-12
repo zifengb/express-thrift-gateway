@@ -12,6 +12,15 @@ const ACTIONS_LIST = {
 	},
 	"food_selectByCategory": {
 		action: "food_selectByCategory"
+	},
+	"foodRating_condition": {
+		action: "foodRating_condition"
+	},
+	"foodRating_add": {	// 添加商品评论
+		action: "foodRating_add"
+	},
+	"foodRating_delete": {
+		action: "foodRating_delete"
 	}
 };
 
@@ -28,10 +37,28 @@ const toString = function (key) {
 
 
 // router configuration
+
+// 商品评价列表
+router.get('/rating', (req, res) => {
+	let key = 'foodRating_condition';
+	let query = req.query;
+	ACTIONS_LIST[key].data = {
+		restaurant_id: query.id || 4,
+		offset: 0,
+		limit: 10,
+		restaurant_rating: 1
+	};
+	console.dir(toString(key));
+	thriftRPC.send(toString(key), function(err, data) {
+		data && res.json(parse(data));
+	});
+});
+
 router.get('/:id', (req, res) => {
 	let key = 'food_getById';
 	let data = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = data : ACTIONS_LIST[key] = {};
+	// console.dir(toString(key))
 	thriftRPC.send(toString(key), function (err, data) {
 	    data && res.json(parse(data));
 	});
