@@ -14,5 +14,9 @@ module.exports = [
 	{
 		path: '/cart',
 		component: require('./cart')
+	},
+	{
+		path: '/article',
+		component: require('./article')
 	}
 ];

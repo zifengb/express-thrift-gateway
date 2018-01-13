@@ -9,6 +9,8 @@ const thriftPool = require('node-thrift-pool');
 // dev
 const PORT = 1027;
 const HOST = '10.31.88.105';
+const PORT = 8090;
+const HOST = '10.31.89.95';
 
 var thrift_options = {
     timeout : 30000,
