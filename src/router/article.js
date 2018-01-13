@@ -13,7 +13,8 @@ const ACTIONS_LIST = {
 };
 
 // Thrift RPC Client
-const thriftRPC = require('../rpcClient');
+// const thriftRPC = require('../rpcClient');
+import thriftRPC from '../rpcClient';
 
 const stringify = JSON.stringify;
 const parse = JSON.parse;
@@ -30,9 +31,9 @@ router.get('/', (req, res) => {
 	let key = 'ARTICLE_QUERY';
 	let query = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = query : ACTIONS_LIST[key] = {};
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC.sendData(toString(key), function (err, data) {
 		data && res.json(parse(data));
-	});
+	}, thriftRPC.platform);
 });
 
 module.exports = router;
