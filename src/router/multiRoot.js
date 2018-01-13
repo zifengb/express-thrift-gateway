@@ -13,7 +13,7 @@ const ACTIONS_LIST = {
 };
 
 // Thrift RPC Client
-const thriftRPC = require('../rpcClient');
+const {thriftRPC_JX, thriftRPC_YL} = require('../rpcClient')
 
 const stringify = JSON.stringify;
 const parse = JSON.parse;

@@ -34,7 +34,7 @@ const ACTIONS_LIST = {
 };
 
 // Thrift RPC Client
-const thriftRPC = require('../rpcClient');
+const {thriftRPC_JX, thriftRPC_YL} = require('../rpcClient')
 
 const stringify = JSON.stringify;
 const parse = JSON.parse;
@@ -64,9 +64,9 @@ router.get('/', (req, res) => {
 		latitude: query.latitude || LATITUDE
 	};
 	console.dir(toString(key));
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 	    data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 // 根据用户经纬度返回附近商家
@@ -79,9 +79,9 @@ router.get('/range', (req, res) => {
 		latitude: LATITUDE
 	};
 	console.dir(toString(key));
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 		data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 // 根据商家id查询
@@ -89,9 +89,9 @@ router.get('/:id', (req, res) => {
 	let key = 'restaurant_getById';
 	let data = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = data : ACTIONS_LIST[key] = {};
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 	    data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 // 查询起送价
@@ -104,9 +104,9 @@ router.get('/:id/deliver_amount', (req, res) => {
 		latitude: LATITUDE
 	};
 	console.dir(toString(key));
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 	    data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 // 商家的菜单列表
@@ -114,9 +114,9 @@ router.get('/:id/menu', (req, res) => {
 	let key = 'foodCategory_selectByRestaurant';
 	let data = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = data : ACTIONS_LIST[key] = {};
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 	    data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 // 查询商家实景图
@@ -125,9 +125,9 @@ router.get('/:id/photos', (req, res) => {
 	let rid = req.params.id;
 	ACTIONS_LIST[key].data = { id: rid};
 	console.dir(toString(key));
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 		data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 // 商家&食物混合查询
@@ -142,9 +142,9 @@ router.get('/query/restaurant_foods', (req, res) => {
 		keyword: '猪脚饭'
 	};
 	console.dir(toString(key));
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 	    data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 

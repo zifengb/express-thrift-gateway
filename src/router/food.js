@@ -25,7 +25,7 @@ const ACTIONS_LIST = {
 };
 
 // Thrift RPC Client
-const thriftRPC = require('../rpcClient');
+const {thriftRPC_JX, thriftRPC_YL} = require('../rpcClient')
 
 const stringify = JSON.stringify;
 const parse = JSON.parse;
@@ -49,9 +49,9 @@ router.get('/rating', (req, res) => {
 		restaurant_rating: 1
 	};
 	console.dir(toString(key));
-	thriftRPC.send(toString(key), function(err, data) {
+	thriftRPC_YL.send(toString(key), function(err, data) {
 		data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 router.get('/:id', (req, res) => {
@@ -59,9 +59,9 @@ router.get('/:id', (req, res) => {
 	let data = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = data : ACTIONS_LIST[key] = {};
 	// console.dir(toString(key))
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 	    data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 // 商家某菜单下的商品
@@ -69,9 +69,9 @@ router.get('/category/:id/foods', (req, res) => {
 	let key = 'food_selectByCategory';
 	let data = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = data : ACTIONS_LIST[key] = {};
-	thriftRPC.send(toString(key), function (err, data) {
+	thriftRPC_YL.send(toString(key), function (err, data) {
 	    data && res.json(parse(data));
-	});
+	}, thriftRPC_YL.platform);
 });
 
 
