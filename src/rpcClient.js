@@ -15,7 +15,7 @@ const thriftPoolsConfig = [
     },
     {
         PORT: 1027,
-        HOST:'10.31.90.35',
+        HOST:'10.31.88.206',
         PLATFORM: 'yingli',
         thrift_options : {
             timeout : 30000,

@@ -50,7 +50,7 @@ router.get('/rating', (req, res) => {
 	};
 	console.dir(toString(key));
 	thriftRPC_YL.send(toString(key), function(err, data) {
-		data && res.json(parse(data));
+		data && res.json(parse(data).data);
 	}, thriftRPC_YL.platform);
 });
 
@@ -60,7 +60,7 @@ router.get('/:id', (req, res) => {
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = data : ACTIONS_LIST[key] = {};
 	// console.dir(toString(key))
 	thriftRPC_YL.send(toString(key), function (err, data) {
-	    data && res.json(parse(data));
+	    data && res.json(parse(data).data);
 	}, thriftRPC_YL.platform);
 });
 
@@ -70,7 +70,7 @@ router.get('/category/:id/foods', (req, res) => {
 	let data = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = data : ACTIONS_LIST[key] = {};
 	thriftRPC_YL.send(toString(key), function (err, data) {
-	    data && res.json(parse(data));
+	    data && res.json(parse(data).data);
 	}, thriftRPC_YL.platform);
 });
 

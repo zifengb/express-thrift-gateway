@@ -48,7 +48,15 @@ router.get('/', (req, res) => {
 		user_id: 1
 	};
 	thriftRPC_YL.send(toString(key), function(err, data) {
-		data && res.json(parse(data));
+		data && res.json(parse(data).data);
+	}, thriftRPC_YL.platform);
+});
+
+router.post('/save', (req, res) => {
+	let key = 'cart_add';
+	ACTIONS_LIST[key].data = req.body;
+	thriftRPC_YL.send(toString(key), function(err, data) {
+		data && res.json(parse(data).data);
 	}, thriftRPC_YL.platform);
 });
 
