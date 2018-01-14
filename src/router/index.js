@@ -18,5 +18,9 @@ module.exports = [
 	{
 		path: '/article',
 		component: require('./article')
+	},
+	{
+		path:'/order',
+		component: require('./order')
 	}
 ];
