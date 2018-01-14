@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
 	let query = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = query : ACTIONS_LIST[key] = {};
 	thriftRPC_JX.send(toString(key), function (err, data) {
-		data && res.json(parse(data));
+		data && res.json(parse(data).data);
 	}, thriftRPC_JX.platform);
 });
 

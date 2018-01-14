@@ -44,9 +44,7 @@ const toString = function (key) {
 // 根据用户id获取其购物车
 router.get('/', (req, res) => {
 	let key = 'cart_getCart';
-	ACTIONS_LIST[key].data = {
-		user_id: 1
-	};
+	ACTIONS_LIST[key].data = req.query;
 	thriftRPC_YL.send(toString(key), function(err, data) {
 		data && res.json(parse(data).data);
 	}, thriftRPC_YL.platform);

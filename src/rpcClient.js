@@ -5,7 +5,7 @@ const thriftPool = require('node-thrift-pool');
 const thriftPoolsConfig = [
     {
         PORT: 8090,
-        HOST:'10.31.88.79',
+        HOST:'10.31.89.18',
         PLATFORM: 'jianxi',
         thrift_options : {
             timeout : 30000,
