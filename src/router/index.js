@@ -20,6 +20,10 @@ module.exports = [
 		component: require('./article')
 	},
 	{
+		path: '/user',
+		component: require('./user')
+	},
+	{
 		path:'/order',
 		component: require('./order')
 	}

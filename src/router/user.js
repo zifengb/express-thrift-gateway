@@ -46,7 +46,6 @@ router.post('/register', (req, res) => {
 				loginPassword: query.loginPassword
 			}
 			thriftRPC_JX.send(toString(key), function (err, data) {
-				let result = parse(data).data
 				res.json({
 					state: 1,
 					msg: '注册成功'
@@ -69,7 +68,6 @@ router.post('/login', (req, res) => {
 			}
 			thriftRPC_JX.send(toString(key), function (err, data) {
 				let result = parse(data).data
-				console.log(result)
 				if (result.list.length > 0) {
 					res.json({
 						state: 1,
@@ -93,6 +91,86 @@ router.post('/login', (req, res) => {
 	
 });
 
+router.post('/updateUserName', (req, res) => {
+	let query = req.body;
+	// 更新用户名
+	let key = 'USER_UPDATE';
+	ACTIONS_LIST[key].data = {
+		userId: query.userId,
+		userName: query.userName,
+	}
+	thriftRPC_JX.send(toString(key), function (err, data) {
+		let result = parse(data).data
+		// 获取最新的账号信息
+		let key = 'USER_QUERY';
+		ACTIONS_LIST[key].data = {
+			userId: query.userId
+		}
+		thriftRPC_JX.send(toString(key), function (err, data) {
+			let result = parse(data).data
+			res.json({
+				state: 1,
+				msg: '成功更新用户名',
+				result: result
+			})
+		}, thriftRPC_JX.platform)
+	}, thriftRPC_JX.platform);
+});
+
+router.post('/updateLoginPassword', (req, res) => {
+	let query = req.body;
+	// 更新用户登录密码
+	let key = 'USER_UPDATE';
+	console.log('query.loginPassword', query.loginPassword)
+	ACTIONS_LIST[key].data = {
+		userId: query.userId,
+		loginPassword: query.loginPassword
+	}
+	thriftRPC_JX.send(toString(key), function (err, data) {
+		let result = parse(data).data
+		// 获取最新的账号信息
+		let key = 'USER_QUERY';
+		ACTIONS_LIST[key].data = {
+			userId: query.userId
+		}
+		thriftRPC_JX.send(toString(key), function (err, data) {
+			let result = parse(data).data
+			res.json({
+				state: 1,
+				msg: '成功重置登录密码',
+				result: result
+			})
+		}, thriftRPC_JX.platform)
+	}, thriftRPC_JX.platform);
+});
+
+router.post('/updatePayPassword', (req, res) => {
+	let query = req.body;
+	// 更新用户支付密码
+	let key = 'USER_UPDATE';
+	ACTIONS_LIST[key].data = {
+		userId: query.userId,
+		payPassword: query.payPassword
+	}
+	thriftRPC_JX.send(toString(key), function (err, data) {
+		let result = parse(data).data
+		// 获取最新的账号信息
+		let key = 'USER_QUERY';
+		console.log('query.payPassword', query.payPassword)
+		ACTIONS_LIST[key].data = {
+			userId: query.userId
+		}
+		thriftRPC_JX.send(toString(key), function (err, data) {
+			let result = parse(data).data
+			res.json({
+				state: 1,
+				msg: '成功重置支付密码',
+				result: result
+			})
+		}, thriftRPC_JX.platform)
+	}, thriftRPC_JX.platform);
+});
+
 function isRegistered(query) {
 	return new Promise((resolve, reject) => {
 		let key = 'USER_QUERY';
@@ -110,5 +188,4 @@ function isRegistered(query) {
 		}, thriftRPC_JX.platform)
 	})
 }
-
 module.exports = router;
