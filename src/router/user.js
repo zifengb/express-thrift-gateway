@@ -177,20 +177,19 @@ router.post('/updateAddressText', (req, res) => {
 	}
 	thriftRPC_JX.send(toString(key), function (err, data) {
 		let addressText = [];
-			if (parse(data).data.addressText) {
-				addressText = parse(parse(data).data.addressText)
-				query.addressText.id = addressText.length 
-				for (var i = 0; i < addressText.length; i++) {
-					addressText.isDefault = false;
-				}
-				query.addressText.isDefault = true
-	 			addressText.push(query.addressText)
-			} else {
-				query.addressText.id = 0
-				query.addressText.isDefault = true
-				addressText.push(query.addressText)
+		if (parse(data).data.addressText) {
+			addressText = parse(parse(data).data.addressText)
+			query.addressText.id = addressText.length 
+			for (var i = 0; i < addressText.length; i++) {
+				addressText.isDefault = false;
 			}
-		} 
+			query.addressText.isDefault = true
+			addressText.push(query.addressText)
+		} else {
+			query.addressText.id = 0
+			query.addressText.isDefault = true
+			addressText.push(query.addressText)
+		}
 		let key = 'USER_UPDATE';
 		// console.log(stringify(addressText))
 		ACTIONS_LIST[key].data = {
