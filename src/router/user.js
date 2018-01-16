@@ -121,10 +121,9 @@ router.post('/updateLoginPassword', (req, res) => {
 	let query = req.body;
 	// 更新用户登录密码
 	let key = 'USER_UPDATE';
-	console.log('query.loginPassword', query.loginPassword)
 	ACTIONS_LIST[key].data = {
 		userId: query.userId,
-		loginPassword: query.loginPassword
+		loginPassword: stringify(query.loginPassword)
 	}
 	thriftRPC_JX.send(toString(key), function (err, data) {
 		let result = parse(data).data
@@ -156,7 +155,6 @@ router.post('/updatePayPassword', (req, res) => {
 		let result = parse(data).data
 		// 获取最新的账号信息
 		let key = 'USER_QUERY';
-		console.log('query.payPassword', query.payPassword)
 		ACTIONS_LIST[key].data = {
 			userId: query.userId
 		}
@@ -171,6 +169,44 @@ router.post('/updatePayPassword', (req, res) => {
 	}, thriftRPC_JX.platform);
 });
 
+router.post('/updateAddressText', (req, res) => {
+	let query = req.body;
+	let key = 'USER_QUERY';
+	ACTIONS_LIST[key].data = {
+		userId: query.userId
+	}
+	thriftRPC_JX.send(toString(key), function (err, data) {
+		let addressText = [];
+			if (parse(data).data.addressText) {
+				addressText = parse(parse(data).data.addressText)
+				query.addressText.id = addressText.length 
+				for (var i = 0; i < addressText.length; i++) {
+					addressText.isDefault = false;
+				}
+				query.addressText.isDefault = true
+	 			addressText.push(query.addressText)
+			} else {
+				query.addressText.id = 0
+				query.addressText.isDefault = true
+				addressText.push(query.addressText)
+			}
+		} 
+		let key = 'USER_UPDATE';
+		// console.log(stringify(addressText))
+		ACTIONS_LIST[key].data = {
+			userId: query.userId,
+			addressText: stringify(addressText) 
+		}
+		thriftRPC_JX.send(toString(key), function (err, data) {
+			res.json({
+				state: 1,
+				msg: '成功添加地址',
+				result: addressText
+			})
+		}, thriftRPC_JX.platform)
+	}, thriftRPC_JX.platform)
+});
+
 function isRegistered(query) {
 	return new Promise((resolve, reject) => {
 		let key = 'USER_QUERY';
@@ -178,8 +214,8 @@ function isRegistered(query) {
 			userName: query.userName,
 		}
 		thriftRPC_JX.send(toString(key), function (err, data) {
+			console.log('data', data)
 			let res = parse(data).data
-			console.log(res)
 			if (res.count === 1) {
 				resolve(true)
 			} else {
