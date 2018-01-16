@@ -58,5 +58,13 @@ router.post('/save', (req, res) => {
 	}, thriftRPC_YL.platform);
 });
 
+router.post('/clear', (req, res) => {
+	let key = 'cart_empty';
+	ACTIONS_LIST[key].data = req.query;
+	thriftRPC_YL.send(toString(key), function(err, data) {
+		data && res.json(parse(data).data);
+	}, thriftRPC_YL.platform);
+});
+
 
 module.exports = router;

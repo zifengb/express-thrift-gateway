@@ -48,7 +48,6 @@ router.get('/rating', (req, res) => {
 		limit: 10,
 		restaurant_rating: 1
 	};
-	console.dir(toString(key));
 	thriftRPC_YL.send(toString(key), function(err, data) {
 		data && res.json(parse(data).data);
 	}, thriftRPC_YL.platform);
@@ -58,7 +57,6 @@ router.get('/:id', (req, res) => {
 	let key = 'food_getById';
 	let data = req.params;
 	ACTIONS_LIST[key] ? ACTIONS_LIST[key].data = data : ACTIONS_LIST[key] = {};
-	// console.dir(toString(key))
 	thriftRPC_YL.send(toString(key), function (err, data) {
 	    data && res.json(parse(data).data);
 	}, thriftRPC_YL.platform);

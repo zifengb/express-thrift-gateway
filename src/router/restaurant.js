@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-// const [LONGITUDE, LATITUDE] = [113.260526, 23.110616];
-const [LONGITUDE, LATITUDE] = [131.611183, 41.257839];
+const [LONGITUDE, LATITUDE] = [113.260526, 23.110616];
+// const [LONGITUDE, LATITUDE] = [131.611183, 41.257839];
 
 const INIT_RPC = {
 	token: "asdjkasl5465asd4as5",

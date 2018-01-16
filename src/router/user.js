@@ -68,6 +68,7 @@ router.post('/login', (req, res) => {
 			}
 			thriftRPC_JX.send(toString(key), function (err, data) {
 				let result = parse(data).data
+				result.list[0].addressText = parse(result.list[0].addressText);
 				if (result.list.length > 0) {
 					res.json({
 						state: 1,
@@ -88,7 +89,7 @@ router.post('/login', (req, res) => {
 			});
 		}
 	})
-	
+
 });
 
 router.post('/updateUserName', (req, res) => {
@@ -108,6 +109,7 @@ router.post('/updateUserName', (req, res) => {
 		}
 		thriftRPC_JX.send(toString(key), function (err, data) {
 			let result = parse(data).data
+			result.list[0].addressText = parse(result.list[0].addressText);
 			res.json({
 				state: 1,
 				msg: '成功更新用户名',
@@ -134,6 +136,7 @@ router.post('/updateLoginPassword', (req, res) => {
 		}
 		thriftRPC_JX.send(toString(key), function (err, data) {
 			let result = parse(data).data
+			result.list[0].addressText = parse(result.list[0].addressText);
 			res.json({
 				state: 1,
 				msg: '成功重置登录密码',
@@ -160,6 +163,7 @@ router.post('/updatePayPassword', (req, res) => {
 		}
 		thriftRPC_JX.send(toString(key), function (err, data) {
 			let result = parse(data).data
+			result.list[0].addressText = parse(result.list[0].addressText);
 			res.json({
 				state: 1,
 				msg: '成功重置支付密码',
@@ -179,9 +183,9 @@ router.post('/updateAddressText', (req, res) => {
 		let addressText = [];
 		if (parse(data).data.addressText) {
 			addressText = parse(parse(data).data.addressText)
-			query.addressText.id = addressText.length 
+			query.addressText.id = addressText.length
 			for (var i = 0; i < addressText.length; i++) {
-				addressText.isDefault = false;
+				addressText[i].isDefault = false;
 			}
 			query.addressText.isDefault = true
 			addressText.push(query.addressText)
@@ -194,7 +198,7 @@ router.post('/updateAddressText', (req, res) => {
 		// console.log(stringify(addressText))
 		ACTIONS_LIST[key].data = {
 			userId: query.userId,
-			addressText: stringify(addressText) 
+			addressText: stringify(addressText)
 		}
 		thriftRPC_JX.send(toString(key), function (err, data) {
 			res.json({
@@ -213,7 +217,6 @@ function isRegistered(query) {
 			userName: query.userName,
 		}
 		thriftRPC_JX.send(toString(key), function (err, data) {
-			console.log('data', data)
 			let res = parse(data).data
 			if (res.count === 1) {
 				resolve(true)

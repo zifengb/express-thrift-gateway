@@ -31,8 +31,6 @@ const toString = function (key) {
 //更新订单信息
 router.post('/update', (req, res) => {
 	let key = 'ORDER_UPDATE';
-	// console.log(req.body)
-
 	// add
 	// ACTIONS_LIST[key].data = {
 	// 	address: '广东工业大学',
@@ -43,7 +41,6 @@ router.post('/update', (req, res) => {
  //        food_id: '1', //商品id
  //        food_name: '猪脚饭',
  //        price: '11.0' //单价
-
 	// 		}
 	// 	]),
 	// 	userId: 1,
@@ -68,9 +65,8 @@ router.post('/update', (req, res) => {
 	// };
 
 	ACTIONS_LIST[key].data = req.body;
-	console.dir(toString(key))
 	thriftRPC_JX.send(toString(key), function (err, data) {
-		data && res.json(parse(data));
+		data && res.json(parse(data).data);
     }, thriftRPC_JX.platform);
 });
 
