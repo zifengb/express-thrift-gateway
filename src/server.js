@@ -17,8 +17,9 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Server 设置
+// const HOST_NAME = process.env.HOST_NAME || '0.0.0.0';
 const HOST_NAME = process.env.HOST_NAME || '127.0.0.1';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3389;
 let server_info = [
 	'Express Server listen on -> http://',
 	HOST_NAME + '/' + PORT,

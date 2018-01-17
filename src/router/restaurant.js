@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const [LONGITUDE, LATITUDE] = [113.260526, 23.110616];
+const [LONGITUDE, LATITUDE] = [113.3578, 23.19623];
 // const [LONGITUDE, LATITUDE] = [131.611183, 41.257839];
 
 const INIT_RPC = {
