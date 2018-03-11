@@ -22,6 +22,7 @@
     "gulp-nodemon": "^2.2.1"
   },
   "scripts": {
+    "test": "npm test",
     "server": "node ./src/server.js",
     "dev": "gulp dev"
   },
