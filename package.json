@@ -24,7 +24,7 @@
   "scripts": {
     "test": "npm test",
     "server": "node ./src/server.js",
-    "dev": "gulp dev"
+    "dev": "node ./node_modules/gulp/bin/gulp.js dev"
   },
   "keywords": [
     "express",
