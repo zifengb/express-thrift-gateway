@@ -1,0 +1,20 @@
+name: Automerge Dependabot Updates  
+  
+on:  
+  pull_request:  
+    types: [labeled]  
+    labels:  
+      - 'dependencies'  
+  
+jobs:  
+  automerge:  
+    if: github.actor == 'dependabot[bot]'  
+    runs-on: ubuntu-latest  
+    steps:  
+      - name: Automerge Dependabot Updates  
+        uses: pascalgn/automerge-action@v0.13.1  
+        env:  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          MERGE_COMMIT_MESSAGE: "Automerge Dependabot Updates"
+        with:  
+          mergeMethod: merge
