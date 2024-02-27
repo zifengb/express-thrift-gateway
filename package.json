@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "gulp": "^4.0.0",
-    "gulp-nodemon": "^2.2.1"
+    "gulp-nodemon": "^2.5.0"
   },
   "scripts": {
     "test": "npm test",
